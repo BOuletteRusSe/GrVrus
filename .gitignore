@@ -1,0 +1,6 @@
+py to exe.bat
+d.py
+test.py
+dist
+InnoSetup/Output/Old
+InnoSetup/Output/New
