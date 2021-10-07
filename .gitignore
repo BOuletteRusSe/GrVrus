@@ -4,3 +4,7 @@ test.py
 dist
 InnoSetup/Output/Old
 InnoSetup/Output/New
+desktop.ini
+InnoSetup/Setup.iss
+grv_popups.spec
+grv.spec

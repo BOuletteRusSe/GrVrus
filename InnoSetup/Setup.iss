@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "GrVrus"
-#define MyAppVersion "2.0.0"
+#define MyAppVersion "2.1.0"
 #define MyAppPublisher "Gravenilvec"
 #define MyAppURL "https://www.youtube.com/watch?v=IwI7H24mefk"
 #define MyAppExeName "GrVrus.exe"
@@ -27,7 +27,7 @@ ChangesAssociations=yes
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputBaseFilename=GrVrus Setup (v. 2.0.0)
+OutputBaseFilename=GrVrus Setup (v. 2.1.0)
 SetupIconFile=D:\Enzo\Documents\Python Scripts\grvrus\icons pack\setup_ico.ico
 Compression=lzma
 SolidCompression=yes
@@ -44,6 +44,7 @@ Source: "D:\Enzo\Documents\Python Scripts\grvrus\dist\{#MyAppExeName}"; DestDir:
 Source: "D:\Enzo\Documents\Python Scripts\grvrus\assets\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "D:\Enzo\Documents\Python Scripts\grvrus\dist\grv.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\Enzo\Documents\Python Scripts\grvrus\dist\core_task.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Enzo\Documents\Python Scripts\grvrus\dist\grv_popups.exe"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
